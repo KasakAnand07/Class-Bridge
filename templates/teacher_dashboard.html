@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Teacher Dashboard</h2>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card p-3 shadow-sm">
+      <h5>Profile</h5>
+      <p><b>Name:</b> {{ teacher.name }}</p>
+      <p><b>Email:</b> {{ teacher.email }}</p>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card p-3 shadow-sm">
+      <h5>Students Attendance</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr><th>Name</th><th>Date</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for record in attendance %}
+          <tr>
+            <td>{{ record.student_name }}</td>
+            <td>{{ record.date }}</td>
+            <td>{{ record.status }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
