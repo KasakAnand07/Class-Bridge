@@ -1,24 +1,161 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Student Dashboard</h2>
-<div class="card p-4 shadow">
-  <h5>Profile</h5>
-  <p><b>Name:</b> {{ student.name }}</p>
-  <p><b>Email:</b> {{ student.email }}</p>
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <h2>🎓 Student Dashboard</h2>
+    <button id="theme-toggle" class="btn btn-secondary">🌙 Dark Mode</button>
+  </div>
 
-  <h5 class="mt-4">Attendance Records</h5>
-  <table class="table table-bordered">
-    <thead>
-      <tr><th>Date</th><th>Status</th></tr>
-    </thead>
-    <tbody>
-      {% for record in attendance %}
-      <tr>
-        <td>{{ record.date }}</td>
-        <td>{{ record.status }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <!-- Profile Card -->
+  <div class="card profile-card">
+    <h4>👤 Profile</h4>
+    <img src="/static/images/student_demo.jpg" alt="Profile Image" class="profile-img">
+    <p><b>Name:</b> John Doe</p>
+    <p><b>Email:</b> johndoe@example.com</p>
+    <p><b>Role:</b> Student</p>
+  </div>
+
+  <!-- Attendance Summary -->
+  <div class="card summary-card">
+    <h4>📊 Attendance Summary</h4>
+    <p><b>Total Classes:</b> 40</p>
+    <p><b>Present:</b> 34</p>
+    <p><b>Absent:</b> 6</p>
+    <p><b>Attendance %:</b> 85%</p>
+  </div>
+
+  <!-- Attendance Records -->
+  <div class="card attendance-card">
+    <h4>📅 Attendance Records</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Date</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2025-09-25</td><td class="present">Present</td></tr>
+        <tr><td>2025-09-24</td><td class="absent">Absent</td></tr>
+        <tr><td>2025-09-23</td><td class="present">Present</td></tr>
+        <tr><td>2025-09-22</td><td class="present">Present</td></tr>
+        <tr><td>2025-09-21</td><td class="present">Present</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Time Table Section -->
+  <div class="card timetable-card">
+    <h4>📖 Time Table</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>9:00 - 10:00</th>
+          <th>10:00 - 11:00</th>
+          <th>11:00 - 12:00</th>
+          <th>1:00 - 2:00</th>
+          <th>2:00 - 3:00</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Monday</b></td>
+          <td>Math</td><td>English</td><td>Physics</td><td>Chemistry</td><td>Computer</td>
+        </tr>
+        <tr>
+          <td><b>Tuesday</b></td>
+          <td>Biology</td><td>Math</td><td>English</td><td>History</td><td>Sports</td>
+        </tr>
+        <tr>
+          <td><b>Wednesday</b></td>
+          <td>Computer</td><td>Chemistry</td><td>Physics</td><td>English</td><td>Math</td>
+        </tr>
+        <tr>
+          <td><b>Thursday</b></td>
+          <td>Math</td><td>Biology</td><td>Chemistry</td><td>History</td><td>Sports</td>
+        </tr>
+        <tr>
+          <td><b>Friday</b></td>
+          <td>English</td><td>Physics</td><td>Computer</td><td>Chemistry</td><td>Biology</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notifications -->
+  <div class="card notify-card">
+    <h4>🔔 Notifications</h4>
+    <ul>
+      <li>Tomorrow (Sept 29) is a holiday 🏖️</li>
+      <li>Submit Physics assignment by Sept 30 📘</li>
+      <li>Extra Math class scheduled on Oct 1 at 10:00 AM ➕</li>
+    </ul>
+  </div>
 </div>
+
+<!-- Dashboard Styles -->
+<style>
+  .dashboard-container {
+    padding: 20px;
+  }
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: var(--card-bg);
+    color: var(--text-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  .present { color: green; font-weight: bold; }
+  .absent { color: red; font-weight: bold; }
+  
+  /* Light Theme */
+  body.light-mode {
+    --bg-color: #f5f5f5;
+    --text-color: #222;
+    --card-bg: #fff;
+  }
+  /* Dark Theme */
+  body.dark-mode {
+    --bg-color: #1e1e1e;
+    --text-color: #f5f5f5;
+    --card-bg: #2c2c2c;
+  }
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+  }
+</style>
+
+<!-- Theme Toggle Script -->
+<script>
+  const toggleBtn = document.getElementById("theme-toggle");
+  const body = document.body;
+
+  // Default to light mode
+  body.classList.add("light-mode");
+
+  toggleBtn.addEventListener("click", () => {
+    if (body.classList.contains("light-mode")) {
+      body.classList.replace("light-mode", "dark-mode");
+      toggleBtn.textContent = "☀️ Light Mode";
+    } else {
+      body.classList.replace("dark-mode", "light-mode");
+      toggleBtn.textContent = "🌙 Dark Mode";
+    }
+  });
+</script>
 {% endblock %}
